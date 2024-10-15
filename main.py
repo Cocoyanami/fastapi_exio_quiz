@@ -42,3 +42,16 @@ def mostrar_respuestas(user_email: EmailStr, id: int):
             return {"message": "ID de pregunta no válido."}
     else:
         return {"message": "No hay preguntas almacenadas para este usuario."}
+
+
+# Obtener pregunta y respuesta específica de un usuario
+@app.get("/question_answer/{user_email}/{id}")
+def get_question_answer(user_email: EmailStr, id: int):
+    if user_email in user_quiz_data:
+        if 0 <= id < len(user_quiz_data[user_email]):
+            quiz_data = user_quiz_data[user_email][id]
+            return {"question": quiz_data.question, "answer": quiz_data.answer}
+        else:
+            return {"message": "ID de pregunta no válido."}
+    else:
+        return {"message": "No hay preguntas almacenadas para este usuario."}
